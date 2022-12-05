@@ -86,6 +86,7 @@ public class Bank {
 
                 transaction.save();
                 account.transactions.add(transaction.transaction_number_string);
+                this.transactions.add(transaction.transaction_number_string);
                 response = "Wirhdraw Rs. " + amount + " from Account " + account.account_number_string
                         + " is Successfully. (Avl Bal. " + account.balance + ")";
             }
@@ -121,6 +122,7 @@ public class Bank {
 
             transaction.save();
             account.transactions.add(transaction.transaction_number_string);
+            this.transactions.add(transaction.transaction_number_string);
             response = "Deposit Rs. " + amount + " to Account " + account.account_number_string
                     + " is Successfully. (Avl Bal. " + account.balance + ")";
         } else {
