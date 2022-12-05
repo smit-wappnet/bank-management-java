@@ -238,11 +238,11 @@ public class Helper {
      * DEBUG(String message) -> void
      */
     public static void DEBUG() {
-        System.out.println();
+        // System.out.println();
     }
 
     public static void DEBUG(String message) {
-        System.out.println("D: " + message);
+        // System.out.println("D: " + message);
     }
     /*
      * Debug Utilities - Over

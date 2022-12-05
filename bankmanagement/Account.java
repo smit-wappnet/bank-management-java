@@ -57,7 +57,7 @@ public class Account {
         this.account_number = Helper.getNewAccountNumber();
         this.account_number_string = Helper.getAccountNumberString(account_number);
         this.customer_number = Helper.getCustomerNumber(customer_number_string);
-        this.customer_number_string = customer_number_string;
+        this.customer_number_string = Helper.getCustomerNumberString(this.customer_number);
         this.name = name;
         this.file_account = new File(Helper.path_accounts + account_number_string + ".json");
         this.save();

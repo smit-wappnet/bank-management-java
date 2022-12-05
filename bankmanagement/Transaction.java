@@ -48,7 +48,7 @@ public class Transaction {
             this.to_account_balance_after = jsonObject.get("to_account_balance_after").getAsInt();
             this.amount = jsonObject.get("amount").getAsInt();
             this.message = jsonObject.get("message").getAsString();
-            Helper.DEBUG("Transaction Loaded From File, Account  Number-" + this.transaction_number);
+            // Helper.DEBUG("Transaction Loaded From File, Account  Number-" + this.transaction_number);
         } catch (Exception e) {
             Helper.DEBUG("Error while Loading Account");
         }

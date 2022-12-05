@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 public class Bank {
     // private String bank_id, bank_name;
@@ -24,7 +25,7 @@ public class Bank {
         this.accounts = new ArrayList<>();
 
         Helper.intializePaths();
-
+        this.transactions = new ArrayList<>();
         file_bank = new File(Helper.path_files + "bank.json");
 
     }
@@ -70,9 +71,9 @@ public class Bank {
                 transaction.message = "Withdraw";
 
                 transaction.from_account = 0;
-                transaction.from_account_string = "0";
+                transaction.from_account_string = "0000000";
                 transaction.to_account = account.account_number;
-                transaction.to_account_string = account.customer_number_string;
+                transaction.to_account_string = account.account_number_string;
 
                 transaction.from_account_balance_before = this.balance;
                 transaction.to_account_balance_before = account.balance;
@@ -88,6 +89,8 @@ public class Bank {
                 this.transactions.add(transaction.transaction_number_string);
                 response = "Wirhdraw Rs. " + amount + " from Account " + account.account_number_string
                         + " is Successfully. (Avl Bal. " + account.balance + ")";
+                this.save();
+                account.save();
             }
         } else {
             response = "Invalid Account Number";
@@ -106,9 +109,9 @@ public class Bank {
             transaction.message = "Diposit";
 
             transaction.to_account = 0;
-            transaction.to_account_string = "0";
+            transaction.to_account_string = "0000000";
             transaction.from_account = account.account_number;
-            transaction.from_account_string = account.customer_number_string;
+            transaction.from_account_string = account.account_number_string;
 
             transaction.from_account_balance_before = account.balance;
             transaction.to_account_balance_before = this.balance;
@@ -124,10 +127,16 @@ public class Bank {
             this.transactions.add(transaction.transaction_number_string);
             response = "Deposit Rs. " + amount + " to Account " + account.account_number_string
                     + " is Successfully. (Avl Bal. " + account.balance + ")";
+            this.save();
+            account.save();
         } else {
             response = "Invalid Account Number";
         }
         return response;
+    }
+
+    public void transfer(String from_account, String to_account, int amount, String message) {
+
     }
 
     /*
@@ -172,6 +181,8 @@ public class Bank {
             Helper.DEBUG("New Bank Intiated");
         }
 
+        Helper.DEBUG(this.transactions.toString());
+
         File[] files;
 
         // Loading Existing Customers
@@ -215,6 +226,12 @@ public class Bank {
             JsonObject jsonObject = new JsonObject();
 
             jsonObject.addProperty("balance", balance);
+            JsonArray jsonArray = new JsonArray();
+            JsonParser parser = new JsonParser();
+            for (String transaction : transactions) {
+                jsonArray.add((JsonElement) parser.parse(transaction));
+            }
+            jsonObject.add("transactions", jsonArray);
             Helper.saveJsonObject(file_bank, jsonObject);
         } catch (Exception e) {
             System.out.println(e.getMessage());
