@@ -93,6 +93,7 @@ public final class ConstructorConstructor {
   private <T> ObjectConstructor<T> newDefaultConstructor(Class<? super T> rawType) {
     try {
       final Constructor<? super T> constructor = rawType.getDeclaredConstructor();
+      @SuppressWarnings("deprecation")
       if (!constructor.isAccessible()) {
         constructor.setAccessible(true);
       }

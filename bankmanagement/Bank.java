@@ -33,7 +33,6 @@ public class Bank {
      * Account Management
      */
     public Account createAccount(String type, String customer_number_string, String name) {
-        String account_number = "";
         Account newAccount;
         if (type.equals("Saving")) {
             newAccount = new SavingAccount(customer_number_string, name);
